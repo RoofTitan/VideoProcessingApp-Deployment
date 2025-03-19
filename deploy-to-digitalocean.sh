@@ -33,10 +33,15 @@ read -p "Enter your DigitalOcean Spaces Secret Key: " DO_SPACES_SECRET
 read -p "Enter your DigitalOcean Spaces Endpoint (e.g., nyc3.digitaloceanspaces.com): " DO_SPACES_ENDPOINT
 read -p "Enter your DigitalOcean Spaces Bucket Name: " DO_SPACES_BUCKET
 
+# Get app name
+echo -e "${BLUE}Setting up DigitalOcean App Platform...${NC}"
+read -p "Enter your DigitalOcean App name (default: videoprocessingapp-$(date +%Y%m%d)): " APP_NAME
+APP_NAME=${APP_NAME:-videoprocessingapp-$(date +%Y%m%d)}
+
 # Create app spec file
 echo -e "${BLUE}Creating app spec file...${NC}"
 cat > app.yaml << EOF
-name: videoprocessingapp
+name: ${APP_NAME}
 region: nyc
 services:
 - name: api
