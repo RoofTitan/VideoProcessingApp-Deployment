@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // API base URL - replace with your actual API URL when deployed
-    const API_BASE_URL = 'https://your-api-url.com';
+    // API base URL - replace with your actual API URL from DigitalOcean
+    const API_BASE_URL = 'https://videoprocessingapp-api.ondigitalocean.app';
     
     // Upload method switching
     const uploadMethods = document.querySelectorAll('.upload-method');
