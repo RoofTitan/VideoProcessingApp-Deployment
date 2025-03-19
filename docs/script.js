@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // API base URL - replace with your actual API URL from DigitalOcean
-    const API_BASE_URL = 'https://videoprocessingapp-api.ondigitalocean.app';
+    // API base URL - updated with the actual API URL from DigitalOcean
+    const API_BASE_URL = 'https://videoprocessingapp-mp2z4.ondigitalocean.app';
     
     // Upload method switching
     const uploadMethods = document.querySelectorAll('.upload-method');
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = true;
             
             // Submit the form
-            const response = await fetch(`${API_BASE_URL}/api/job/upload`, {
+            const response = await fetch(`${API_BASE_URL}/api/Job/upload`, {
                 method: 'POST',
                 body: formData
             });
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = true;
             
             // Submit the form
-            const response = await fetch(`${API_BASE_URL}/api/job/submit`, {
+            const response = await fetch(`${API_BASE_URL}/api/Job/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Jobs list functionality
     async function fetchJobs() {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/job/all`);
+            const response = await fetch(`${API_BASE_URL}/api/Job/all`);
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function viewJob(jobId) {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/job/status/${jobId}`);
+            const response = await fetch(`${API_BASE_URL}/api/Job/status/${jobId}`);
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function downloadJob(jobId, filename) {
-        window.open(`${API_BASE_URL}/api/download/output/${jobId}/${filename}`);
+        window.open(`${API_BASE_URL}/api/Download/output/${jobId}/${filename}`);
     }
     
     async function cancelJob(jobId) {
@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         try {
-            const response = await fetch(`${API_BASE_URL}/api/job/cancel/${jobId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/Job/cancel/${jobId}`, {
                 method: 'POST'
             });
             
