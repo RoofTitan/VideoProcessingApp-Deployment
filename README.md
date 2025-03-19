@@ -73,7 +73,35 @@ Add the following secrets to your GitHub repository:
 
 ### 5. Deploy the Application
 
-The application will be automatically deployed when you push changes to the main branch. The GitHub Actions workflows will:
+You can deploy the application using the provided deployment scripts:
+
+#### Automated Deployment (Recommended)
+
+Run the master deployment script to deploy both the API and web interface:
+
+```bash
+./deploy.sh
+```
+
+This script will:
+1. Deploy the API to DigitalOcean App Platform
+2. Enable GitHub Pages for the web interface
+
+#### Manual Deployment
+
+If you prefer to deploy each component separately:
+
+1. Deploy the API to DigitalOcean App Platform:
+   ```bash
+   ./deploy-to-digitalocean.sh
+   ```
+
+2. Enable GitHub Pages for the web interface:
+   ```bash
+   ./enable-github-pages.sh
+   ```
+
+Alternatively, the application will be automatically deployed when you push changes to the main branch. The GitHub Actions workflows will:
 
 1. Build and test the application
 2. Deploy the web interface to GitHub Pages
