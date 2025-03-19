@@ -1,0 +1,45 @@
+name: Deploy API to Digital Ocean
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'VideoProcessingApp/**'
+      - 'config/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      
+      - name: Build container
+        run: docker build -t registry.digitalocean.com/your-registry/video-processing-api:$(echo $GITHUB_SHA | head -c7) -f VideoProcessingApp/Dockerfile VideoProcessingApp/
+      
+      - name: Log in to DigitalOcean Container Registry
+        run: doctl registry login --expiry-seconds 600
+      
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push registry.digitalocean.com/your-registry/video-processing-api:$(echo $GITHUB_SHA | head -c7)
+      
+      - name: Update deployment file
+        run: |
+          TAG=$(echo $GITHUB_SHA | head -c7)
+          sed -i 's|<IMAGE>|registry.digitalocean.com/your-registry/video-processing-api:'${TAG}'|' $GITHUB_WORKSPACE/config/app.yaml
+      
+      - name: Deploy to DigitalOcean App Platform
+        run: doctl apps update ${{ secrets.DIGITALOCEAN_APP_ID }} --spec $GITHUB_WORKSPACE/config/app.yaml
+      
+      - name: Verify deployment
+        run: |
+          echo "Waiting for deployment to complete..."
+          sleep 30
+          doctl apps get ${{ secrets.DIGITALOCEAN_APP_ID }} --format ID,DefaultIngress
+          echo "Deployment completed successfully!"
