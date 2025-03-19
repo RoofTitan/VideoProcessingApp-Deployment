@@ -59,10 +59,11 @@ This guide will walk you through the process of deploying the VideoProcessingApp
 2. Navigate to "Apps" in the left sidebar
 3. Click "Create App"
 4. Choose "GitHub" as the source
-5. Select your VideoProcessingApp repository
+5. Select your VideoProcessingApp-Deployment repository
 6. Select the "main" branch
 7. Configure the app:
    - Choose the "api" directory as the source directory
+   - The API is a simple Node.js Express application that provides endpoints for video processing
    - Set the environment variables:
      - `DO_SPACES_KEY`: Your Digital Ocean Spaces Access Key
      - `DO_SPACES_SECRET`: Your Digital Ocean Spaces Secret Key
@@ -71,6 +72,15 @@ This guide will walk you through the process of deploying the VideoProcessingApp
 8. Click "Next"
 9. Choose the "Basic" plan
 10. Click "Create Resources"
+
+### Troubleshooting DigitalOcean Deployment
+
+If you encounter an error like "target source directory does not exist: invalid argument" when deploying to DigitalOcean, make sure:
+
+1. The "api" directory exists in your repository
+2. The "api" directory contains at least:
+   - index.js - The main API file
+   - package.json - With proper dependencies and start script
 
 ## Step 5: Configure GitHub Repository Settings and Secrets
 
